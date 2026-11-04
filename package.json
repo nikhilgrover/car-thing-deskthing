@@ -1,0 +1,28 @@
+{
+  "name": "car-thing-deskthing",
+  "version": "1.0.0",
+  "description": "Transform the Spotify Car Thing (Superbird) into a desktop media controller, macro pad, and 800x480 web kiosk",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikhilgrover/car-thing-deskthing.git"
+  },
+  "keywords": [
+    "spotify-car-thing",
+    "superbird",
+    "deskthing",
+    "macro-pad",
+    "stream-deck",
+    "web-kiosk",
+    "mta-transit"
+  ],
+  "author": "Nikhil Grover",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

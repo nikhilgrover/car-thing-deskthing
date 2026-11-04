@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=800, height=480, initial-scale=1.0, user-scalable=no">
+  <title>DeskThing Kiosk</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="kiosk-container">
+    <!-- Top-Left: Media & Now Playing -->
+    <div class="card media-card">
+      <div class="media-top-row">
+        <div class="album-art" id="album-art-box">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </div>
+        <div class="track-meta">
+          <div class="track-title" id="track-title">Spotify Paused</div>
+          <div class="track-artist" id="track-artist">Press play or turn dial</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="progress-container">
+          <span id="time-current">1:24</span>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+          </div>
+          <span id="time-total">3:45</span>
+        </div>
+
+        <div class="media-controls-row">
+          <button class="ctrl-btn" id="btn-prev" onclick="sendAction('media-prev')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="19 20 9 12 19 4 19 20"></polygon>
+              <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2"></line>
+            </svg>
+          </button>
+          <button class="ctrl-btn play-pause-btn" id="btn-play-pause" onclick="sendAction('media-toggle')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="play-icon">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </button>
+          <button class="ctrl-btn" id="btn-next" onclick="sendAction('media-next')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top-Right: Clock, Date & Live Weather -->
+    <div class="card info-card">
+      <div class="clock-header">
+        <div>
+          <span class="digital-clock" id="clock-time">12:00</span>
+          <span class="clock-ampm" id="clock-ampm">PM</span>
+        </div>
+        <div class="date-label" id="date-label">Wednesday, Nov 4</div>
+      </div>
+
+      <div class="weather-row">
+        <div class="weather-left">
+          <span class="weather-temp" id="weather-temp">59°</span>
+          <div>
+            <div class="weather-cond" id="weather-cond">Clear Sky</div>
+            <div style="font-size:11px; color:#777;" id="weather-hilo">H: 64° L: 48°</div>
+          </div>
+        </div>
+        <div style="font-size:12px; font-weight:700; color:#1db954;" id="weather-location">Brooklyn, NY</div>
+      </div>
+    </div>
+
+    <!-- Bottom-Left: MTA Subway Transit Status -->
+    <div class="card transit-row-card">
+      <div class="transit-title-row">
+        <span class="transit-title">Atlantic Av - Barclays Ctr</span>
+        <span class="transit-status">● Good Service</span>
+      </div>
+      <div class="transit-bullets">
+        <span class="bullet b-red">2</span>
+        <span class="bullet b-red">3</span>
+        <span class="bullet b-green">4</span>
+        <span class="bullet b-green">5</span>
+        <span class="bullet b-orange">B</span>
+        <span class="bullet b-orange">D</span>
+        <span class="bullet b-yellow">N</span>
+        <span class="bullet b-yellow">Q</span>
+        <span class="bullet b-yellow">R</span>
+      </div>
+    </div>
+
+    <!-- Bottom-Right: 4-Key Touchscreen Macro Pad -->
+    <div class="card macro-pad-card">
+      <button class="macro-touch-btn" onclick="sendAction('mute-mic')">
+        <svg class="macro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="23"></line>
+        </svg>
+        <span class="macro-label">Mute Mic</span>
+      </button>
+
+      <button class="macro-touch-btn" onclick="sendAction('open-terminal')">
+        <svg class="macro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+        <span class="macro-label">Terminal</span>
+      </button>
+
+      <button class="macro-touch-btn" onclick="sendAction('workspace')">
+        <svg class="macro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span class="macro-label">Code</span>
+      </button>
+
+      <button class="macro-touch-btn" onclick="sendAction('git-status')">
+        <svg class="macro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="18" r="3"></circle>
+          <circle cx="6" cy="6" r="3"></circle>
+          <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+          <line x1="6" y1="9" x2="6" y2="21"></line>
+        </svg>
+        <span class="macro-label">Git</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
