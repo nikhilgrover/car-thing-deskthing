@@ -1,0 +1,11 @@
+{
+  "id": "01a1c0dc-da1a-7c15-af5c-e6056c146fa8",
+  "name": "DeskThing Kiosk",
+  "version": "1.0.0",
+  "description": "Universal Media Controller, Touch Macro Pad, and NYC MTA Subway / Weather Kiosk for Spotify Car Thing",
+  "icon": "icon.svg",
+  "permissions": [
+    "net.fetch"
+  ],
+  "min_libbridgething_version": "0.12.0"
+}

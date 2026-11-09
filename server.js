@@ -3,14 +3,40 @@ import { exec } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import fs from 'node:fs';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 8080;
 
+// Enable CORS for Car Thing & local network clients
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'web-kiosk')));
+
+// Serve bundled dist folder if built, or fallback to web-kiosk
+const staticDir = fs.existsSync(path.join(__dirname, 'dist'))
+  ? path.join(__dirname, 'dist')
+  : path.join(__dirname, 'web-kiosk');
+app.use(express.static(staticDir));
+
+// Endpoint to download the BridgeThing package zip directly
+app.get('/deskthing-kiosk.zip', (req, res) => {
+  const zipFile = path.join(__dirname, 'dist', 'deskthing-kiosk.zip');
+  if (fs.existsSync(zipFile)) {
+    res.download(zipFile, 'deskthing-kiosk.zip');
+  } else {
+    res.status(404).json({ error: 'Package not built yet. Run npm run build first.' });
+  }
+});
 
 function runAppleScript(script) {
   return new Promise((resolve, reject) => {

@@ -1,68 +1,76 @@
-# 🚗 Spotify Car Thing (Superbird) DeskThing & Web Kiosk
+# 🚗 Spotify Car Thing (Superbird) DeskThing & BridgeThing WebApp
 
-Transform your discontinued Spotify Car Thing into a high-performance desktop companion featuring:
-1. **DeskThing Media Hub**: Spotify & Apple Music controls, live album art, track scrub, and physical rotary volume knob.
-2. **Hardware & Touch Macro Pad**: Map the 4 top preset buttons, rotary dial, and touchscreen keys to macOS shortcuts, mic mute, app launchers, and terminal commands.
-3. **800 × 480 IPS Web Kiosk**: Real-time digital clock, Open-Meteo weather, and live MTA subway arrivals (Atlantic Av - Barclays Ctr).
+Transform your Spotify Car Thing into a high-performance desktop companion featuring:
+1. **Universal Media Controller**: Real-time track metadata, album art, progress bar, and play/pause/skip for **Spotify, YouTube, Apple Music, and Podcasts** using `@bridgething/client`.
+2. **Hardware & Touch Macro Pad**: Map the 4 top preset buttons, rotary dial, and touchscreen keys to macOS shortcuts (mic mute, terminal, workspace launcher, and git status).
+3. **800 × 480 IPS Web Kiosk**: Real-time digital clock, Brooklyn Open-Meteo live weather, and live NYC MTA subway status (Atlantic Av - Barclays Ctr lines 2, 3, 4, 5, B, D, N, Q, R).
 
 ---
 
 ## 📱 Hardware Specifications
 
-* **Codename**: Superbird
+* **Device**: Spotify Car Thing (Superbird)
+* **Firmware**: BridgeThing (Mainline Linux, U-Boot, Chromium cast_shell, Panfrost GPU)
 * **Processor**: Amlogic S905D2 Quad-Core ARM Cortex-A53 @ 1.8 GHz
 * **Display**: 3.97" 800 × 480 IPS color capacitive touchscreen (60 Hz)
 * **Controls**:
-  * 1 × Heavy Aluminum Rotary Dial with click button
-  * 1 × Front "Back" tactile button
-  * 4 × Top preset buttons
+  * 1 × Heavy Aluminum Rotary Dial with push button (Volume / Play-Pause)
+  * 1 × Front "Back / M" tactile button
+  * 4 × Top preset buttons (Hardware Macros 1–4)
   * 4 × Beamforming microphone array
-* **Connectivity**: USB 2.0 Type-C (Power + RNDIS/Ethernet data)
+* **Connectivity**: Bluetooth 5.0 (BLE / RFCOMM / iAP2) + USB-C
 
 ---
 
-## ⚡ Flashing the Device (One-Time Setup)
+## 📦 Building the BridgeThing WebApp Package
 
-Your device is currently detected in **Amlogic USB Burning Mode** (`GX-CHIP` / `0x1b8e:0xc003`).
+To build the optimized package:
 
-### Web Flasher (Recommended)
-
-1. Open **Google Chrome** on your Mac.
-2. Navigate to **[terbium.app](https://terbium.app)**.
-3. Click **Connect** and select **GX-CHIP** from the Chrome WebUSB dialog.
-4. When prompted by the flasher, select the **DeskThing** firmware image.
-5. Click **Flash Device**. The process takes approximately 2–3 minutes.
-6. Once completed, the Car Thing will reboot into its new custom operating system!
-
-*(If you ever need to enter USB Burn Mode again: unplug USB, hold **Button 1 and Button 4** on the top edge, and plug USB back in).*
-
----
-
-## 🖥️ Companion Server & Macro Engine
-
-The companion server runs locally on your Mac to execute media controls, AppleScripts, and macro actions triggered from the Car Thing.
-
-### 1. Installation
 ```bash
 cd /Users/nikhil/workspace/car-thing-deskthing
 npm install
+npm run build
 ```
 
-### 2. Start the Server
+The build process:
+* Bundles `src/app.js` using `esbuild` for Chromium 100+.
+* Copies `manifest.json`, `index.html`, `styles.css`, and `icon.svg` into `dist/`.
+* Packages everything into `dist/deskthing-kiosk.zip`.
+
+---
+
+## 📲 Installing on Your Car Thing
+
+When you are ready to load the package onto your device:
+
+1. Connect your Car Thing to your laptop via USB-C or turn on Bluetooth.
+2. In **Google Chrome**, open **[bridgething.com/device](https://bridgething.com/device)**.
+3. Click **Connect** and select your Car Thing from the WebUSB / WebBluetooth list.
+4. Choose **Install Local App / Upload Zip** and select:
+   `/Users/nikhil/workspace/car-thing-deskthing/dist/deskthing-kiosk.zip`
+5. The app will install onto the device and appear directly in your launcher grid with the custom DeskThing icon!
+
+---
+
+## 🖥️ Companion Server & Macro Actions
+
+The Node.js companion server runs locally on your Mac to execute media controls, AppleScripts, and macro actions triggered from the Car Thing.
+
 ```bash
 npm start
 ```
 
-### 3. Features & Macro Actions
+### Hardware Control Mappings
 
-| Action | Control | Mac Operation |
+| Control | Input | Action |
 | :--- | :--- | :--- |
-| **Play / Pause** | Front button / Touch | Toggles Spotify playback |
-| **Volume Knob** | Rotary Dial | Adjusts macOS master volume (+/- 5%) |
-| **Mute Mic** | Top Button 1 / Touch | Instantly toggles macOS system input volume |
-| **Terminal** | Top Button 2 / Touch | Activates macOS Terminal |
-| **Code Workspace**| Top Button 3 / Touch | Opens `/Users/nikhil/workspace` |
-| **Git Status** | Top Button 4 / Touch | Desktop notification with git status |
+| **Rotary Dial Turn** | `wheel` (deltaX/Y) | Universal Volume Up / Down (+/- 5%) |
+| **Rotary Dial Press** | `Enter` key | Universal Play / Pause Toggle |
+| **Preset 1** | Top button `1` / Touch | Mute Mac Microphone |
+| **Preset 2** | Top button `2` / Touch | Launch / Focus macOS Terminal |
+| **Preset 3** | Top button `3` / Touch | Open `/Users/nikhil/workspace` |
+| **Preset 4** | Top button `4` / Touch | Desktop notification with Git status |
+| **Front Button** | Back / `m` | Return to BridgeThing Launcher Grid |
 
 ---
 

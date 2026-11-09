@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121820"/>
+      <stop offset="100%" stop-color="#0a0d12"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1db954"/>
+      <stop offset="100%" stop-color="#1ed760"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#1db954"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Squircle Base -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#bg)" stroke="#2a3544" stroke-width="2"/>
+
+  <!-- Dial Outer Ring -->
+  <circle cx="64" cy="64" r="42" fill="none" stroke="#222d3b" stroke-width="6"/>
+  
+  <!-- Active Arc -->
+  <circle cx="64" cy="64" r="42" fill="none" stroke="url(#accent)" stroke-width="6" stroke-dasharray="190 80" stroke-linecap="round" transform="rotate(-90 64 64)"/>
+
+  <!-- Center Core -->
+  <circle cx="64" cy="64" r="30" fill="#141a24" stroke="#2a384c" stroke-width="2"/>
+
+  <!-- Equalizer / Waveform bars -->
+  <rect x="46" y="58" width="5" height="12" rx="2.5" fill="url(#glow)"/>
+  <rect x="55" y="50" width="5" height="28" rx="2.5" fill="url(#glow)"/>
+  <rect x="64" y="44" width="5" height="40" rx="2.5" fill="url(#accent)"/>
+  <rect x="73" y="52" width="5" height="24" rx="2.5" fill="url(#glow)"/>
+  <rect x="82" y="60" width="5" height="8" rx="2.5" fill="url(#glow)"/>
+
+  <!-- Preset indicator dots -->
+  <circle cx="48" cy="22" r="3" fill="#1db954"/>
+  <circle cx="58" cy="18" r="3" fill="#1db954"/>
+  <circle cx="70" cy="18" r="3" fill="#1db954"/>
+  <circle cx="80" cy="22" r="3" fill="#1db954"/>
+</svg>
